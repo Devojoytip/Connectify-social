@@ -2,9 +2,11 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 8000;
+const REDDIS_PORT=6379;
 // const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 const env = require('./config/environment');
+const mongo = require('./config/mongo');
 
 // for session cookie
 
@@ -102,6 +104,19 @@ app.use(session({
         }
     )
 }));
+
+// Connection Pooling
+mongo.connectMongo (function(connecRes) { 
+    if (connecRes.success) 
+    {
+        console.log("Successfully conected to Mongo"); 
+        global.dbObj = connecRes.dbObj;
+        // global.dbObj is the connection object we can use to connect to Mongodb
+    } 
+    else {
+        console.log("Error in creating connection")
+    }
+});
 
 // STEP 8
 app.use(passport.initialize());
