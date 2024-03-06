@@ -1,10 +1,13 @@
 const User = require('../models/user');
 const fs = require('fs');
 const path = require('path');
+const redis = require('redis');
+const REDDIS_PORT=6379;
+const client=redis.createClient(REDDIS_PORT);
 
 module.exports.profile_fn = (req, res) => {
     console.log('Profile is viewed');
-    console.log(req.user)
+    // client.setex(req.user.username, 3600,req.user);
     res.render('profile', {
         title: 'Profile Page',
         org_user: req.user,

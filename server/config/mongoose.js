@@ -10,6 +10,7 @@ async function main() {
 
 // acquire connection to check if its successful
 const db=mongoose.connection;
+// const db=global.dbObj;
 
 // error
 db.on('error',console.error.bind(console,'error connecting to db'));
