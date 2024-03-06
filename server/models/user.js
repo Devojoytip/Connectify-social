@@ -49,6 +49,9 @@ userSchema.statics.uploadedAvatar = multer({ storage: storage }).single('avatar'
 
 userSchema.statics.avatarPath = AVATAR_PATH;
 
+// Create an index on the username field
+userSchema.index({ username: 1 });
+
 const User = new mongoose.model('User', userSchema);
 
 module.exports = User;
